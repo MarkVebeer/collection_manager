@@ -29,11 +29,69 @@ $isLoggedIn = isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true;
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .card-img-container {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid rgba(0,0,0,.125);
+            padding: 0;
+            overflow: hidden;
+        }
+        .card-img-container img {
+            max-height: 100%;
+            max-width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .header-container h1 {
+            margin: 0;
+            flex-grow: 1;
+            text-align: center;
+        }
+        .login-status {
+            min-width: 200px;
+        }
+        .search-container {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .search-buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 15px;
+        }
+        .search-buttons .btn {
+            flex: 1;
+        }
         .card {
-            transition: transform 0.2s;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card-body {
+            flex-grow: 1;
         }
         .card:hover {
-            transform: scale(1.02);
+            transform: translateY(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
         .modal-img {
             max-width: 100%;
@@ -43,86 +101,65 @@ $isLoggedIn = isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true;
             max-width: 200px;
             margin: 0 auto;
         }
-        .input-group {
-            max-width: 500px;
-            margin: 0 auto;
-        }
-        .alert {
-            max-width: 500px;
-            margin: 20px auto;
-        }
-        .card-img-container {
-            height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #f8f9fa;
-            border-bottom: 1px solid rgba(0,0,0,.125);
-        }
-        .card-img-top {
-            max-width: 100%;
-            height: auto;
-            transition: transform 0.3s ease;
-        }
-        .card-img-top:hover {
-            transform: scale(1.05);
-        }
-        .card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        .card-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-        .card-text {
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-        .search-container {
-            background-color: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-        .login-status {
-            position: absolute;
-            top: 20px;
-            right: 20px;
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column-reverse;
+                text-align: center;
+            }
+            .login-status {
+                width: 100%;
+                text-align: center;
+            }
+            .header-container h1 {
+                width: 100%;
+            }
+            .search-buttons {
+                flex-wrap: wrap;
+            }
+            .search-buttons .btn {
+                flex: 1 1 calc(50% - 4px);
+            }
+            .card-img-container {
+                height: 150px;
+            }
+            
+            .card {
+                max-width: 100%;
+            }
         }
     </style>
+
 </head>
 <body>
-    <div class="container mt-4">
-        <?php if($isLoggedIn): ?>
-        <div class="login-status">
-            <span class="me-2">Üdv, <?php echo htmlspecialchars($_SESSION["username"]); ?>!</span>
-            <a href="logout.php" class="btn btn-danger btn-sm">Kijelentkezés</a>
+<div class="container mt-4">
+        <div class="header-container">
+            <h1>Gyűjtemény</h1>
+            <div class="login-status">
+                <?php if($isLoggedIn): ?>
+                    <div class="d-flex justify-content-end align-items-center">
+                        <span class="me-3">Üdv, <?php echo htmlspecialchars($_SESSION["username"]); ?>!</span>
+                        <a href="logout.php" class="btn btn-danger">Kijelentkezés</a>
+                    </div>
+                <?php else: ?>
+                    <div class="text-end">
+                        <a href="login.php" class="btn btn-primary">Bejelentkezés</a>
+                    </div>
+                <?php endif; ?>
+            </div>
         </div>
-        <?php else: ?>
-        <div class="login-status">
-            <a href="login.php" class="btn btn-primary btn-sm">Bejelentkezés</a>
-        </div>
-        <?php endif; ?>
-
-        <h1 class="text-center mb-4">Gyűjtemény</h1>
         
         <!-- Keresés és Vonalkód beolvasás -->
         <div class="search-container">
-            <div class="row g-3">
+            <div class="row g-4 justify-content-center">
                 <!-- Keresés -->
-                <div class="col-md-6">
+                <div class="<?php echo $isLoggedIn ? 'col-md-6' : 'col-md-6 col-lg-5 col-xl-4'; ?>">
                     <h5 class="mb-3">Keresés</h5>
-                    <form action="" method="GET" class="d-flex">
-                        <div class="input-group">
-                            <input type="text" name="search" class="form-control" 
-                                   placeholder="Keresés név vagy vonalkód alapján..." 
-                                   value="<?php echo htmlspecialchars($search); ?>"
-                                   id="searchInput">
+                    <form action="" method="GET">
+                        <input type="text" name="search" class="form-control" 
+                               placeholder="Keresés név vagy vonalkód alapján..." 
+                               value="<?php echo htmlspecialchars($search); ?>"
+                               id="searchInput">
+                        <div class="search-buttons">
                             <button type="submit" class="btn btn-primary">
                                 <i class="fas fa-search"></i> Keresés
                             </button>
@@ -139,8 +176,8 @@ $isLoggedIn = isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true;
                 <?php if($isLoggedIn): ?>
                 <div class="col-md-6">
                     <h5 class="mb-3">Új termék hozzáadása</h5>
-                    <div class="input-group">
-                        <input type="text" id="barcodeInput" class="form-control" placeholder="Vonalkód">
+                    <input type="text" id="barcodeInput" class="form-control" placeholder="Vonalkód">
+                    <div class="search-buttons">
                         <button class="btn btn-primary" onclick="checkBarcode()">
                             <i class="fas fa-plus"></i> Hozzáadás
                         </button>
@@ -170,8 +207,7 @@ $isLoggedIn = isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true;
                         <div class="card-img-container">
                             <img src="<?php echo htmlspecialchars($row['image_url']); ?>" 
                                  class="card-img-top" 
-                                 alt="<?php echo htmlspecialchars($row['name']); ?>"
-                                 style="max-height: 200px; object-fit: contain; padding: 10px;">
+                                 alt="<?php echo htmlspecialchars($row['name']); ?>">
                         </div>
                         <div class="card-body">
                             <h5 class="card-title"><?php echo htmlspecialchars($row['name']); ?></h5>
