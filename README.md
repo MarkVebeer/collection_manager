@@ -1,62 +1,101 @@
 # Collection Manager
 
-A simple collection management tool designed for easy scanning and tracking of items, primarily focused on food products like Pringles, utilizing barcodes for convenience.
+A robust PHP-based collection management system with barcode scanning capabilities, designed for tracking products in personal collections.
 
 ## Features
 
-- User authentication system with registration and login functionality
-- Barcode scanning support for quick product entry
-- Product management (add, view, delete)
-- API endpoints for product operations
-- Web-based interface for easy access
+- Secure user authentication with registration and login functionality
+- Real-time barcode scanning for quick product entry
+- Comprehensive product management (add, view, edit, delete)
+- RESTful API endpoints for seamless integration
+- Responsive web interface for desktop and mobile access
+- Data export capabilities for backup and analysis
 
 ## Technical Stack
 
-- PHP for backend logic
-- MySQL database for data storage
-- HTML/CSS for frontend interface
+- PHP 7.4+ for backend processing
+- MySQL/MariaDB for reliable data storage
+- HTML5/CSS3 for modern responsive interface
+- JavaScript for client-side functionality
+- Barcode.js for scanner integration
 
 ## Project Structure
 
 ```
 collection_manager/
 ├── api/
-│   ├── delete_product.php
-│   └── get_product.php
-├── config.php
-├── database.sql
-├── index.php
-├── login.php
-├── logout.php
-├── register.php
-├── LICENSE
-└── README.md
+│   ├── delete_product.php   # Handle product deletion
+│   └── get_product.php      # Retrieve product information
+├── config.php               # Database and application configuration
+├── database.sql            # Database schema and initial data
+├── index.php               # Main application interface
+├── login.php               # User authentication
+├── logout.php              # Session termination
+├── register.php            # New user registration
+├── LICENSE                 # Project license terms
+└── README.md              # Project documentation
 ```
 
-## Setup
+## Setup Instructions
 
-1. Import the database schema using `database.sql`
-2. Configure your database connection in `config.php`
-3. Deploy the files to your web server
-4. Access the application through your web browser
+1. Server Requirements:
+   - PHP 7.4 or higher
+   - MySQL/MariaDB database
+   - Web server (Apache/Nginx)
 
-## Usage
+2. Installation:
+   - Clone the repository to your web server
+   - Import `database.sql` to create the required schema
+   - Copy `config.php.example` to `config.php` and update database credentials
+   - Ensure proper file permissions are set
 
-1. Register for a new account or login with existing credentials
-2. Use the main interface to scan or manually enter product information
-3. View and manage your collection through the web interface
-4. Logout when finished
+3. Configuration:
+   - Adjust database connection parameters in `config.php`
+   - Configure web server virtual host if needed
+   - Set up SSL certificate for secure connections
 
-## API Endpoints
+## Usage Guide
 
-The application provides two main API endpoints:
-- `/api/get_product.php` - Retrieve product information
-- `/api/delete_product.php` - Remove products from the collection
+1. User Management:
+   - Register a new account via the registration page
+   - Login using your credentials
+   - Use "Forgot Password" if needed
+
+2. Collection Management:
+   - Scan products using device camera or barcode scanner
+   - Manually enter product details when needed
+   - View your complete collection in the dashboard
+   - Edit or remove items as necessary
+   - Export collection data for backup
+
+3. API Integration:
+   - Use `/api/get_product.php` to retrieve product details
+   - Send DELETE requests to `/api/delete_product.php` to remove items
+   - API documentation available in the docs folder
+
+## Security Features
+
+- Password hashing using modern algorithms
+- Protection against SQL injection
+- CSRF token validation
+- Rate limiting on API endpoints
+- Secure session management
 
 ## License
 
-This project is licensed under the terms included in the LICENSE file.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Contributing
 
-Feel free to submit issues and enhancement requests.
+Contributions are welcome! Please feel free to:
+- Report bugs and issues
+- Suggest new features
+- Submit pull requests
+- Improve documentation
+
+## Support
+
+For support and questions:
+- Create an issue in the GitHub repository
+- Contact the maintainers directly
+- Check the documentation for common solutions
