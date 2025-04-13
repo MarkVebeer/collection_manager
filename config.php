@@ -23,14 +23,14 @@ function jsonError($message) {
 }
 
 
-
+//change these for your server
 define('DB_SERVER', 'localhost');
 
-define('DB_USERNAME', 'c1887_pringles');
+define('DB_USERNAME', 'root');
 
-define('DB_PASSWORD', 'jg_YX44KqBmHv');
+define('DB_PASSWORD', '');
 
-define('DB_NAME', 'c1887_pringles');
+define('DB_NAME', 'collection_db');
 
 
 
