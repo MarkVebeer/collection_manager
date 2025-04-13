@@ -14,7 +14,7 @@ if (!isset($_GET['barcode'])) {
 $barcode = $_GET['barcode'];
 
 // Termék törlése
-$stmt = mysqli_prepare($conn, "DELETE FROM pringles WHERE barcode = ?");
+$stmt = mysqli_prepare($conn, "DELETE FROM collection WHERE barcode = ?");
 mysqli_stmt_bind_param($stmt, "s", $barcode);
 
 if (mysqli_stmt_execute($stmt)) {
